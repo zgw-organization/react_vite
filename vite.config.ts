@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import postcsspxtoviewport from 'postcss-px-to-viewport';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,21 +26,39 @@ export default defineConfig({
     //   },
     // },
   },
-  // 配置全局 sass 变量：
   css: {
+    // 配置全局 sass 变量：
     preprocessorOptions: {
       scss: {
         additionalData: '@import "@/common/styles/variables.scss";',
       },
     },
+    postcss: {
+      plugins: [
+        postcsspxtoviewport({
+          unitToConvert: 'px', // 要转化的单位
+          viewportWidth: 375, // UI设计稿的宽度
+          unitPrecision: 6, // 转换后的精度，即小数点位数
+          propList: ['*'], // 指定转换的css属性的单位，*代表全部css属性的单位都进行转换
+          viewportUnit: 'vw', // 指定需要转换成的视窗单位，默认vw
+          fontViewportUnit: 'vw', // 指定字体需要转换成的视窗单位，默认vw
+          selectorBlackList: ['ignore-'], // 指定不转换为视窗单位的类名，
+          minPixelValue: 1, // 默认值1，小于或等于1px则不进行转换
+          mediaQuery: true, // 是否在媒体查询的css代码中也进行转换，默认false
+          replace: true, // 是否转换后直接更换属性值
+          landscape: false, // 是否处理横屏情况
+        }),
+      ],
+    },
   },
   // 打包配置项
   build: {
     outDir: 'dist',
+    assetsDir: 'static',
     chunkSizeWarningLimit: 2000,
     cssCodeSplit: true, // css拆分
     sourcemap: false, // 不生成sourcemap
-    minify: 'terser', // 是否禁用最小化混淆 esbuild(打包速度最快)  terser(打包体积最小)
+    minify: 'esbuild', // 是否禁用最小化混淆 esbuild(打包速度最快)  terser(打包体积最小)
     assetsInlineLimit: 4000, // 小于该值图片将打包成base64
   },
 });
