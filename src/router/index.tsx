@@ -1,7 +1,6 @@
-import ErrorPage from '@/pages/ErrorPage';
 import AppLayout from '@/layout/AppLayout';
 import { MetaMenu, AuthRouteObject } from './interface';
-import { Home, ReactQueryDemo } from './lazyLoad';
+import { ErrorPage, Home, Login, ReactQueryDemo } from './lazyLoad';
 
 const routers: AuthRouteObject<MetaMenu>[] = [
   {
@@ -23,10 +22,24 @@ const routers: AuthRouteObject<MetaMenu>[] = [
         path: 'query',
         element: <ReactQueryDemo />,
         meta: {
-          title: 'React Query',
+          title: 'ReactQuery',
         },
       },
     ],
+  },
+  {
+    path: '/login',
+    element: <Login />,
+    meta: {
+      title: 'Login',
+    },
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
+    meta: {
+      title: '404',
+    },
   },
 ];
 

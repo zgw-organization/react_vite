@@ -1,7 +1,7 @@
 {
   "name": "react-vite",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,9 +12,12 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,ts,vue,jsx,tsx}": [
+    "*.{js,ts,json,md,jsx,tsx}": [
       "prettier --write",
       "eslint --cache --fix --max-warnings=0"
+    ],
+    "src/**/*.{scss,less,css}": [
+      "prettier --write"
     ]
   },
   "dependencies": {

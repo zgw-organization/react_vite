@@ -1,10 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { userSlice } from './feature/userSlice';
+import userReducer from './feature/userSlice';
 // 创建store
 export const store = configureStore({
   // reducer
   reducer: {
-    user: userSlice.reducer,
+    user: userReducer,
   },
   // 中间件
   middleware: (getDefaultMiddleware) =>

@@ -4,14 +4,17 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [react()],
   resolve: {
+    // 设置别名
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
   },
   server: {
-    port: 5173, // 开发环境启动的端口
+    port: 4399, // 开发环境启动的端口
+    host: true, // 支持IP访问
     open: true, // 自动打开浏览器
     // proxy: {
     //   "/api": {
@@ -26,8 +29,17 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/styles/variables.scss";',
+        additionalData: '@import "@/common/styles/variables.scss";',
       },
     },
+  },
+  // 打包配置项
+  build: {
+    outDir: 'dist',
+    chunkSizeWarningLimit: 2000,
+    cssCodeSplit: true, // css拆分
+    sourcemap: false, // 不生成sourcemap
+    minify: 'terser', // 是否禁用最小化混淆 esbuild(打包速度最快)  terser(打包体积最小)
+    assetsInlineLimit: 4000, // 小于该值图片将打包成base64
   },
 });
