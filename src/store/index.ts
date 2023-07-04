@@ -12,7 +12,7 @@ export const store = configureStore({
       serializableCheck: false,
     }),
   // redux-devtools-extension何时开启
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: import.meta.env.MODE !== 'production',
 });
 
 export type AppDispatch = typeof store.dispatch;

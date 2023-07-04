@@ -4,7 +4,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 class Request {
   instance: AxiosInstance;
   baseConfig: AxiosRequestConfig = {
-    // baseURL: process.env.VUE_APP_BASE_URL,
+    // baseURL: import.meta.env.VITE_HTTP,
     baseURL: '',
     timeout: 5000,
   };

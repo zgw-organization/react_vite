@@ -18,7 +18,8 @@ export default function AppLayout() {
   return (
     <div>
       {total}
-      AppLayout<Outlet></Outlet>
+      AppLayout
+      <Outlet />
     </div>
   );
 }

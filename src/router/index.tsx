@@ -1,26 +1,35 @@
 import AppLayout from '@/layout/AppLayout';
 import { MetaMenu, AuthRouteObject } from './interface';
 import { ErrorPage, Home, Login, ReactQueryDemo } from './lazyLoad';
+import AuthRoute from '@/components/AuthRoute';
+import { Navigate } from 'react-router-dom';
 
 const routers: AuthRouteObject<MetaMenu>[] = [
   {
     path: '/',
-    element: <AppLayout />,
-    errorElement: <ErrorPage />,
+    element: (
+      <AuthRoute>
+        <AppLayout />
+      </AuthRoute>
+    ),
     meta: {
       title: '',
     },
     children: [
       {
+        index: true,
+        element: <Navigate to="/home" replace />,
+      },
+      {
         path: 'home',
-        element: <Home />,
+        Component: Home,
         meta: {
           title: 'Home',
         },
       },
       {
         path: 'query',
-        element: <ReactQueryDemo />,
+        Component: ReactQueryDemo,
         meta: {
           title: 'ReactQuery',
         },
@@ -29,14 +38,14 @@ const routers: AuthRouteObject<MetaMenu>[] = [
   },
   {
     path: '/login',
-    element: <Login />,
+    Component: Login,
     meta: {
       title: 'Login',
     },
   },
   {
     path: '*',
-    element: <ErrorPage />,
+    Component: ErrorPage,
     meta: {
       title: '404',
     },

@@ -20,7 +20,7 @@ export type AuthRouteObject<T extends Record<string, any> = any> =
   | AuthNonIndexRouteObject<T>;
 
 export type MetaMenu = {
-  meta: {
+  meta?: {
     title?: string;
     icon?: ReactNode;
   };
