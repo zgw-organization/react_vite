@@ -2,11 +2,19 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import postcsspxtoviewport from 'postcss-px-to-viewport';
+import viteCompression from 'vite-plugin-compression';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  plugins: [react()],
+  plugins: [
+    react(),
+    // 打包时生成gz文件
+    {
+      ...viteCompression(),
+      apply: 'build',
+    },
+  ],
   resolve: {
     // 设置别名
     alias: {
@@ -30,7 +38,7 @@ export default defineConfig({
     // 配置全局 sass 变量：
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/common/styles/variables.scss";',
+        additionalData: '@import "@/assets/styles/variables.scss";',
       },
     },
     postcss: {
@@ -53,6 +61,7 @@ export default defineConfig({
   },
   // 打包配置项
   build: {
+    // 打包配置项
     outDir: 'dist',
     assetsDir: 'static',
     chunkSizeWarningLimit: 2000,
@@ -60,5 +69,18 @@ export default defineConfig({
     sourcemap: false, // 不生成sourcemap
     minify: 'esbuild', // 是否禁用最小化混淆 esbuild(打包速度最快)  terser(打包体积最小)
     assetsInlineLimit: 4000, // 小于该值图片将打包成base64
+    rollupOptions: {
+      output: {
+        // 第三方插件分包
+        manualChunks: {
+          vue: ['vue', 'pinia', 'vue-router'],
+          // elementIcons: ['@element-plus/icons-vue'],
+        },
+        // 拆分css和js
+        chunkFileNames: 'static/js/[name]-[hash].js',
+        entryFileNames: 'static/js/[name]-[hash].js',
+        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+      },
+    },
   },
 });
