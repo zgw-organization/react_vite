@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 
 function AuthRoute({ children }: any) {
   const isToken = undefined;
-  if (isToken) {
+  if (!isToken) {
     return <>{children}</>;
   } else {
     return <Navigate to="/login" replace />;
